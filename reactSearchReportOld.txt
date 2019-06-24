@@ -1,0 +1,259 @@
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import {Button,Modal} from 'react-bootstrap';
+ 
+ 
+const background={
+		boxShadow:"0 0 5px",
+		marginTop:"3px",
+		marginBottom:"15px",
+		backgroundColor:"white",
+		padding:"36px"
+}
+const tagBg={
+		padding: "4px",
+		boxShadow: "0 0 1px"
+}
+var tableData = {
+		  columns: ['Service', 'Cost/Unit', 'Unit', 'Units Requested'],
+		  rows: [{
+		    'Service': 'Veterinary Assitance',
+		    'Cost/Unit': 50,
+		    'Unit': '1 Hour',
+		    'Units Requested': 12
+		  }, {
+		    'Service': 'Veterinary Assitance',
+		    'Cost/Unit': 50,
+		    'Unit': '1 Hour',
+		    'Units Requested': 12
+		  }, {
+		    'Service': 'Veterinary Assitance',
+		    'Cost/Unit': 50,
+		    'Unit': '1 Hour',
+		    'Units Requested': 12
+		  }, {
+		    'Service': 'Veterinary Assitance',
+		    'Cost/Unit': 50,
+		    'Unit': '1 Hour',
+		    'Units Requested': 12
+		  }, {
+		    'Service': 'Veterinary Assitance',
+		    'Cost/Unit': 50,
+		    'Unit': '1 Hour',
+		    'Units Requested': 12
+		  }, {
+		    'Service': 'Veterinary Assitance',
+		    'Cost/Unit': 50,
+		    'Unit': '1 Hour',
+		    'Units Requested': 12
+		  }, {
+		    'Service': 'Veterinary Assitance',
+		    'Cost/Unit': 50,
+		    'Unit': '1 Hour',
+		    'Units Requested': 12
+		  }, {
+		    'Service': 'Veterinary Assitance',
+		    'Cost/Unit': 50,
+		    'Unit': '1 Hour',
+		    'Units Requested': 12
+		  }, {
+		    'Service': 'Veterinary Assitance',
+		    'Cost/Unit': 50,
+		    'Unit': '1 Hour',
+		    'Units Requested': 12
+		  }, {
+		    'Service': 'foo',
+		    'Unit': null,
+		    'Cost/Unit': undefined,
+		    'Units Requested': 42
+		  }]
+		};
+var tags=[{id:"1",name:"Finance"},{id:"2",name:"Management"},{id:"3",name:"Economics"},{id:"4",name:"Finance"},{id:"5",name:"Management"},{id:"6",name:"Economics"}];
+		
+
+class SearchReports extends React.Component{
+	render(){
+		return(
+		<div id="mainSearchComp">
+			<SearchFilter />
+			<div className="row">
+				<div className="col-sm-8 col-xs-12">
+					<ReportsTable data={tableData} />
+				</div>
+				<div className="col-sm-4 col-xs-12" id="">
+					<Tags/>
+				</div>
+			</div>
+		</div>
+		);
+	}
+}
+
+class SearchFilter extends React.Component{
+ 
+	render(){
+		return(
+			<div id="SearchFilter" style={background}> 
+			 
+			      <form action="/action_page.php">
+				      <div className="row">
+				      		<div className="col-sm-6">
+				      			<div className="form-group">
+				      				<label htmlFor="reportName">Report Name:</label>
+				      				<input type="text" className="form-control form-control-sm" id=" " placeholder=" " name="reportName" />
+				      			</div>
+				          </div>
+				          <div className="col-sm-6">
+				          		<div className="form-group">
+				          			<label htmlFor="sectionName">Section Name:</label>
+				          			<input type="text" className="form-control form-control-sm" id=" " placeholder=" " name="sectionName" />
+				          		</div>
+				          </div>
+				      </div>
+				      <div className="row">
+				      		<div className="col-sm-6">
+				      			<div className="form-group">
+				      				<label htmlFor="reportName">From:</label>
+				      				<input type="text" className="form-control form-control-sm" id=" " placeholder=" " name="dateFrom" />
+				      			</div>
+				          </div>
+				          <div className="col-sm-6">
+				          		<div className="form-group">
+				          			<label htmlFor="sectionName">To:</label>
+				          			<input type="text" className="form-control form-control-sm" id=" " placeholder=" " name="dateTo" />
+				          		</div>
+				          </div>
+				      </div>
+				      <Button variant="success" id=" " style={{"float":"right","margin":"-5px"}}>Search<i className="fa fa-search" aria-hidden="true"></i></Button>
+				    {/* <ul> <li>
+					     <div className="custom-control custom-checkbox">
+					     	<input type="checkbox" className="custom-control-input" id="customCheck1" /> 
+					     	<label className="custom-control-label" htmlFor="customCheck1">hhh</label>
+					    </div> 
+				    </li>
+				    </ul>*/}
+				    </form>
+			
+			</div>
+			);
+	}
+}//end of SearchFilter
+class ReportsTable extends React.Component{
+	constructor(props){
+		super(props);
+		const data = this.props.data
+	}
+	render() {
+		    // Data
+		    var dataColumns = this.props.data.columns;
+		    var dataRows = this.props.data.rows;
+
+		    var tableHeaders = (<thead>
+		          <tr>
+		            {dataColumns.map(function(column) {
+		              return <th key={column}>{column}</th>; })
+		            }
+		          </tr>
+		      </thead>);
+
+		    var tableBody = dataRows.map(function(row,i) {
+		      return (
+		        <tr key={i}>
+		          {dataColumns.map(function(column,ind) {
+		            return <td key={ind}>{row[column]}</td>; })}
+		        </tr>); });
+		     
+		    // Decorate with Bootstrap CSS
+		    return (
+		    		<div style={background}>
+		    		<table className="table table-bordered table-hover" width="100%">
+		    			{tableHeaders}
+		    			<tbody>{tableBody}</tbody>	        
+		    		</table>
+		    		</div>
+		    ); 
+	 }
+}
+
+class Tags extends React.Component{
+	constructor(props, context) {
+	    super(props, context);
+	    this.handleShowTags=this.handleShowTags.bind(this);
+	    this.handleScroll=this.handleScroll.bind(this);
+	    this.state = {
+	    		value:  ""
+	    };
+	}
+	 
+	 componentDidMount() {
+		   
+		    window.addEventListener('scroll', this.handleScroll);
+		 }
+
+	handleShowTags(){
+		 alert("wip");
+	} 
+	handleScroll(){
+		var sticky=window.pageYOffset;
+		 
+		if(sticky>=283){
+			document.getElementById("tags").style.position="fixed";
+			document.getElementById("tags").style.marginTop="-279px";
+		}
+		else{
+			document.getElementById("tags").style.position="inherit";
+			document.getElementById("tags").style.marginTop="3px";
+		}
+				
+	}
+	render(){
+		//console.log(tags); 
+		var Kpis = tags.map((elm,ind) => {
+			//  console.log(elm);
+			  var x="customCheck"+(ind+1);
+		//console.log("x");
+			return(
+					
+					/*<li key={ind} style={tagBg}> 
+						<input type="checkbox" />
+							 
+							 {elm.name}</li>*/
+						
+					  
+				     	<li  key={ind} style={tagBg}>
+						     <div className="custom-control custom-checkbox">
+						     	<input type="checkbox" className="custom-control-input" id={x} /> 
+						     	<label className="custom-control-label" htmlFor={x}>{elm.name}</label>
+						    </div> 
+					    </li>
+				   
+		);//end of tags return 1	marginTop:"3px",
+		});
+		return(
+		<div  key={1}  id="tags" style={background}> 
+	 <span className="mb-0 m-t-20 text-primary" style={{"marginTop":"-22px","marginBottom":"19px","float":"right","cursor":"pointer"}} onClick={this.handleShowTags}>Apply Filter</span>
+
+			<form action="/action_page.php">
+			 
+				<div className="col-sm-12 col-xs-12">
+				 
+						<div className="form-group">
+							<input type="text" className="form-control form-control-sm" id=" " placeholder=" " name="reportName" />
+						</div>
+				</div>	 
+				<div className="col-sm-12">
+			      		<div className="form-group">
+			      		<ul className="list-unstyled mb-0">{Kpis}</ul>
+			      		</div>
+			     </div>    
+		     </form>
+		</div>)//end of tags return 2
+	}//end of tags render
+}
+
+
+if(document.getElementById("searchReport_blade")){
+	 
+	ReactDOM.render(<SearchReports />,document.getElementById("searchReport_blade"));
+
+}
